@@ -101,7 +101,9 @@ Page({
     return STATUS_ITEMS.map((item) => ({
       ...item,
       count: statusCount[item.name] || 0,
-    })).filter((item) => item.count > 0);
+    }))
+      .filter((item) => item.count > 0)
+      .reverse();
   },
 
   buildYearOptions(minYear, maxYear, yearStatsByYear) {

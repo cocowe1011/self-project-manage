@@ -70,6 +70,22 @@ module.exports = {
     </view>
   </view>
 
+  <!-- 快捷入口 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToAddProject">
+      <view class="action-icon add-icon">
+        <van-icon name="plus" size="32rpx" color="#fff" />
+      </view>
+      <text class="action-label">新建项目</text>
+    </view>
+    <view class="action-item" bindtap="goToProjectList">
+      <view class="action-icon list-icon">
+        <van-icon name="bars" size="28rpx" color="#fff" />
+      </view>
+      <text class="action-label">项目列表</text>
+    </view>
+  </view>
+
   <!-- 项目状态统计 -->
   <view class="status-section">
     <view class="year-stats-compact">
@@ -117,22 +133,6 @@ module.exports = {
       </view>
     </view>
     <text class="status-empty" wx:else>暂无进行中项目</text>
-  </view>
-
-  <!-- 快捷入口 -->
-  <view class="quick-actions">
-    <view class="action-item" bindtap="goToAddProject">
-      <view class="action-icon add-icon">
-        <van-icon name="plus" size="32rpx" color="#fff" />
-      </view>
-      <text class="action-label">新建项目</text>
-    </view>
-    <view class="action-item" bindtap="goToProjectList">
-      <view class="action-icon list-icon">
-        <van-icon name="bars" size="28rpx" color="#fff" />
-      </view>
-      <text class="action-label">项目列表</text>
-    </view>
   </view>
 
   <!-- 最近回款记录 -->

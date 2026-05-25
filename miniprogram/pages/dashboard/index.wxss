@@ -145,7 +145,7 @@ page {
   margin: 0 32rpx;
 }
 
-/* 快捷入口（图标 + 文字横排） */
+/* 快捷入口（图标 + 文字横排居中） */
 .quick-actions {
   display: flex;
   gap: 20rpx;
@@ -161,6 +161,7 @@ page {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 16rpx;
   box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
   transition: opacity 0.2s;
@@ -189,11 +190,11 @@ page {
 }
 
 .action-label {
-  flex: 1;
   font-size: 28rpx;
   color: #333;
   font-weight: 500;
   line-height: 1.4;
+  white-space: nowrap;
 }
 
 /* 最近回款 */
