@@ -5,6 +5,27 @@ cloud.init({
 
 const db = cloud.database();
 const _ = db.command;
+const MAX_BATCH = 100;
+
+// 分批拉取集合全部记录（云函数单次 get 默认最多 100 条）
+const fetchAllFromCollection = async (collectionName, options = {}) => {
+  const { where } = options;
+  let countQuery = db.collection(collectionName);
+  if (where) countQuery = countQuery.where(where);
+  const countRes = await countQuery.count();
+  const total = countRes.total;
+  if (total === 0) return [];
+
+  const batchTimes = Math.ceil(total / MAX_BATCH);
+  const tasks = [];
+  for (let i = 0; i < batchTimes; i++) {
+    let query = db.collection(collectionName);
+    if (where) query = query.where(where);
+    tasks.push(query.skip(i * MAX_BATCH).limit(MAX_BATCH).get());
+  }
+  const results = await Promise.all(tasks);
+  return results.reduce((acc, cur) => acc.concat(cur.data), []);
+};
 
 // 项目状态枚举
 const PROJECT_STATUS = {
@@ -268,21 +289,27 @@ const updateProjectStatus = async (event) => {
   }
 };
 
+// 从项目开始时间解析年份（无开始时间时不计入年度统计与年份范围）
+const getYearFromStartDate = (startDate) => {
+  if (!startDate) return null;
+  const match = String(startDate).match(/^(\d{4})/);
+  return match ? parseInt(match[1], 10) : null;
+};
+
 // 获取首页大盘统计数据
 const getDashboardStats = async () => {
   try {
-    // 获取所有项目（排除已作废）
-    const projectsRes = await db.collection("projects").where({
-      status: _.neq(PROJECT_STATUS.CANCELLED)
-    }).get();
-    const projects = projectsRes.data;
+    // 获取所有项目（排除已作废，分批拉取避免默认 100 条上限）
+    const projects = await fetchAllFromCollection("projects", {
+      where: { status: _.neq(PROJECT_STATUS.CANCELLED) },
+    });
 
     // 计算预计总收入
     const totalExpectedIncome = projects.reduce((sum, p) => sum + p.expectedIncome, 0);
 
     // 获取所有收入记录并计算已到账总额
-    const incomeRes = await db.collection("income_records").get();
-    const totalReceivedAmount = incomeRes.data.reduce((sum, r) => sum + r.amount, 0);
+    const incomeRecords = await fetchAllFromCollection("income_records");
+    const totalReceivedAmount = incomeRecords.reduce((sum, r) => sum + r.amount, 0);
 
     // 未到账金额
     const totalUnreceivedAmount = totalExpectedIncome - totalReceivedAmount;
@@ -320,7 +347,7 @@ const getDashboardStats = async () => {
 
     // 按项目汇总收入，用于区分已到账/未到账项目
     const incomeByProject = {};
-    incomeRes.data.forEach((record) => {
+    incomeRecords.forEach((record) => {
       if (!incomeByProject[record.projectId]) {
         incomeByProject[record.projectId] = 0;
       }
@@ -334,6 +361,7 @@ const getDashboardStats = async () => {
       return {
         _id: project._id,
         name: project.name,
+        startDate: project.startDate || "",
         expectedIncome: project.expectedIncome,
         receivedAmount,
         unreceivedAmount,
@@ -351,6 +379,45 @@ const getDashboardStats = async () => {
       .filter(p => p.unreceivedAmount > 0)
       .sort((a, b) => b.unreceivedAmount - a.unreceivedAmount);
 
+    // 年份选择范围：最早项目开始时间年份 ~ 今年
+    const currentYear = new Date().getFullYear();
+    let minYear = null;
+    projects.forEach((p) => {
+      const y = getYearFromStartDate(p.startDate);
+      if (y != null && (minYear === null || y < minYear)) minYear = y;
+    });
+    if (minYear === null) minYear = currentYear;
+
+    // 按项目开始时间年份汇总收入
+    const yearStatsByYear = {};
+    for (let y = minYear; y <= currentYear; y++) {
+      yearStatsByYear[y] = {
+        totalExpectedIncome: 0,
+        totalReceivedAmount: 0,
+        totalUnreceivedAmount: 0,
+        projectCount: 0,
+      };
+    }
+    projects.forEach((project) => {
+      const year = getYearFromStartDate(project.startDate);
+      if (!year) return;
+      if (!yearStatsByYear[year]) {
+        yearStatsByYear[year] = {
+          totalExpectedIncome: 0,
+          totalReceivedAmount: 0,
+          totalUnreceivedAmount: 0,
+          projectCount: 0,
+        };
+      }
+      const receivedAmount = incomeByProject[project._id] || 0;
+      const expectedIncome = project.expectedIncome || 0;
+      const stats = yearStatsByYear[year];
+      stats.totalExpectedIncome += expectedIncome;
+      stats.totalReceivedAmount += receivedAmount;
+      stats.totalUnreceivedAmount += expectedIncome - receivedAmount;
+      stats.projectCount += 1;
+    });
+
     return {
       success: true,
       data: {
@@ -363,6 +430,10 @@ const getDashboardStats = async () => {
         recentIncomes,
         receivedProjects,
         unreceivedProjects,
+        projectList,
+        minYear,
+        currentYear,
+        yearStatsByYear,
       },
     };
   } catch (e) {

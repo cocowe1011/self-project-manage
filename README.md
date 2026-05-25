@@ -10,3 +10,9 @@
 
 - [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
+## 发布生产步骤
+
+- cloudfunctions/manageProject 上传云函数
+- 打包上传
+- 管理页面申请上线
+

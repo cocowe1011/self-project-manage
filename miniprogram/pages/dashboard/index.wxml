@@ -37,7 +37,7 @@ module.exports = {
     </view>
     
     <view class="finance-main">
-      <view class="finance-item main-item">
+      <view class="finance-item">
         <view class="finance-label-row">
           <text class="finance-label">预计总收入</text>
           <van-icon name="{{hideAmount ? 'closed-eye' : 'eye-o'}}" size="18px" color="rgba(255,255,255,0.7)" bindtap="toggleAmountVisibility" custom-class="eye-icon" />
@@ -70,53 +70,68 @@ module.exports = {
     </view>
   </view>
 
+  <!-- 项目状态统计 -->
+  <view class="status-section">
+    <view class="year-stats-compact">
+      <view class="year-stats-bar">
+        <text class="section-title">年度收入</text>
+        <picker
+          mode="selector"
+          range="{{yearOptions}}"
+          value="{{selectedYearIndex}}"
+          bindchange="onYearChange"
+        >
+          <view class="year-picker-inline">
+            <text>{{selectedYear}}年</text>
+            <van-icon name="arrow-down" size="18rpx" color="#8C8C8C" />
+          </view>
+        </picker>
+        <text class="year-bar-meta">{{yearStats.projectCount}}项</text>
+      </view>
+      <view class="year-metrics">
+        <view class="year-metric clickable" data-type="expected" bindtap="showYearProjects">
+          <text class="metric-label">预计</text>
+          <text class="metric-value primary">{{hideAmount ? '***' : '¥' + fmt.formatMoney(yearStats.totalExpectedIncome)}}</text>
+        </view>
+        <view class="year-metric-divider"></view>
+        <view class="year-metric clickable" data-type="received" bindtap="showYearProjects">
+          <text class="metric-label">已到账</text>
+          <text class="metric-value success">{{hideAmount ? '***' : '¥' + fmt.formatMoney(yearStats.totalReceivedAmount)}}</text>
+        </view>
+        <view class="year-metric-divider"></view>
+        <view class="year-metric clickable" data-type="unreceived" bindtap="showYearProjects">
+          <text class="metric-label">未到账</text>
+          <text class="metric-value warning">{{hideAmount ? '***' : '¥' + fmt.formatMoney(yearStats.totalUnreceivedAmount)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="status-stats-bar">
+      <text class="section-title">项目状态分布</text>
+    </view>
+    <view class="status-chips" wx:if="{{statusItems.length > 0}}">
+      <view class="status-chip" wx:for="{{statusItems}}" wx:key="name">
+        <view class="status-dot {{item.dotClass}}"></view>
+        <text class="chip-name">{{item.name}}</text>
+        <text class="chip-count">{{item.count}}</text>
+      </view>
+    </view>
+    <text class="status-empty" wx:else>暂无进行中项目</text>
+  </view>
+
   <!-- 快捷入口 -->
   <view class="quick-actions">
     <view class="action-item" bindtap="goToAddProject">
       <view class="action-icon add-icon">
-        <van-icon name="plus" size="40rpx" color="#fff" />
+        <van-icon name="plus" size="32rpx" color="#fff" />
       </view>
       <text class="action-label">新建项目</text>
     </view>
     <view class="action-item" bindtap="goToProjectList">
       <view class="action-icon list-icon">
-        <van-icon name="bars" size="36rpx" color="#fff" />
+        <van-icon name="bars" size="28rpx" color="#fff" />
       </view>
       <text class="action-label">项目列表</text>
-    </view>
-  </view>
-
-  <!-- 项目状态统计 -->
-  <view class="status-section">
-    <view class="section-header">
-      <text class="section-title">项目状态分布</text>
-    </view>
-    <view class="status-list">
-      <view class="status-item" wx:if="{{stats.statusCount['未开始']}}">
-        <view class="status-dot dot-gray"></view>
-        <text class="status-name">未开始</text>
-        <text class="status-count">{{stats.statusCount['未开始'] || 0}}</text>
-      </view>
-      <view class="status-item" wx:if="{{stats.statusCount['开发中']}}">
-        <view class="status-dot dot-blue"></view>
-        <text class="status-name">开发中</text>
-        <text class="status-count">{{stats.statusCount['开发中'] || 0}}</text>
-      </view>
-      <view class="status-item" wx:if="{{stats.statusCount['开发完成']}}">
-        <view class="status-dot dot-purple"></view>
-        <text class="status-name">开发完成</text>
-        <text class="status-count">{{stats.statusCount['开发完成'] || 0}}</text>
-      </view>
-      <view class="status-item" wx:if="{{stats.statusCount['现场调试中']}}">
-        <view class="status-dot dot-orange"></view>
-        <text class="status-name">现场调试中</text>
-        <text class="status-count">{{stats.statusCount['现场调试中'] || 0}}</text>
-      </view>
-      <view class="status-item" wx:if="{{stats.statusCount['已交付运维中']}}">
-        <view class="status-dot dot-green"></view>
-        <text class="status-name">已交付运维中</text>
-        <text class="status-count">{{stats.statusCount['已交付运维中'] || 0}}</text>
-      </view>
     </view>
   </view>
 
@@ -174,8 +189,14 @@ module.exports = {
             <text class="popup-item-status">{{item.status}}</text>
           </view>
           <view class="popup-item-right">
-            <text class="popup-item-amount {{popupType === 'received' ? 'success' : 'warning'}}">
-              {{popupType === 'received' ? '已到账 ¥' : '未到账 ¥'}}{{fmt.formatMoney(popupType === 'received' ? item.receivedAmount : item.unreceivedAmount)}}
+            <text class="popup-item-amount {{popupType === 'received' ? 'success' : popupType === 'unreceived' ? 'warning' : 'primary'}}">
+              {{popupType === 'expected' ? '预计 ¥' : popupType === 'received' ? '已到账 ¥' : '未到账 ¥'}}{{fmt.formatMoney(popupType === 'expected' ? item.expectedIncome : popupType === 'received' ? item.receivedAmount : item.unreceivedAmount)}}
+            </text>
+            <text class="popup-item-progress" wx:if="{{popupType === 'expected' && item.receivedAmount > 0}}">
+              已收 ¥{{fmt.formatMoney(item.receivedAmount)}}
+            </text>
+            <text class="popup-item-progress" wx:if="{{popupType === 'expected' && item.unreceivedAmount > 0}}">
+              未到账 ¥{{fmt.formatMoney(item.unreceivedAmount)}}
             </text>
             <text class="popup-item-progress" wx:if="{{popupType === 'received' && item.unreceivedAmount > 0}}">
               剩余 ¥{{fmt.formatMoney(item.unreceivedAmount)}}
@@ -186,7 +207,7 @@ module.exports = {
           </view>
         </view>
         <view class="popup-empty" wx:if="{{popupProjects.length === 0}}">
-          <text>暂无{{popupType === 'received' ? '已到账' : '未到账'}}项目</text>
+          <text>暂无{{popupType === 'expected' ? '预计收入' : popupType === 'received' ? '已到账' : '未到账'}}项目</text>
         </view>
       </scroll-view>
     </view>

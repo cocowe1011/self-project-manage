@@ -26,13 +26,14 @@ page {
 }
 
 .finance-title {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
   color: #fff;
 }
 
 .finance-subtitle {
   font-size: 24rpx;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -57,7 +58,7 @@ page {
 }
 
 .progress-label {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -144,32 +145,39 @@ page {
   margin: 0 32rpx;
 }
 
-/* 快捷入口 */
+/* 快捷入口（图标 + 文字横排） */
 .quick-actions {
   display: flex;
-  gap: 24rpx;
+  gap: 20rpx;
   margin-bottom: 24rpx;
 }
 
 .action-item {
   flex: 1;
+  min-width: 0;
   background: #fff;
   border-radius: 16rpx;
-  padding: 32rpx;
+  padding: 28rpx 24rpx;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 16rpx;
   box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+  transition: opacity 0.2s;
+}
+
+.action-item:active {
+  opacity: 0.75;
 }
 
 .action-icon {
-  width: 80rpx;
-  height: 80rpx;
+  width: 56rpx;
+  height: 56rpx;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .add-icon {
@@ -181,9 +189,11 @@ page {
 }
 
 .action-label {
+  flex: 1;
   font-size: 28rpx;
   color: #333;
   font-weight: 500;
+  line-height: 1.4;
 }
 
 /* 最近回款 */
@@ -195,21 +205,24 @@ page {
   box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
 }
 
+/* 区块标题 30rpx | 辅助说明 24rpx | 字段标签 26rpx */
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24rpx;
+  margin-bottom: 20rpx;
 }
 
 .section-title {
   font-size: 30rpx;
   font-weight: 600;
+  line-height: 1.4;
   color: #333;
 }
 
 .section-more {
   font-size: 24rpx;
+  font-weight: 400;
   color: #1677FF;
 }
 
@@ -256,26 +269,29 @@ page {
 .status-section {
   background: #fff;
   border-radius: 16rpx;
-  padding: 32rpx;
+  padding: 28rpx;
   margin-bottom: 24rpx;
   box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
 }
 
-.status-list {
+.status-chips {
   display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.status-item {
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 16rpx;
 }
 
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 12rpx 20rpx;
+  background: #F5F7FA;
+  border-radius: 10rpx;
+}
+
 .status-dot {
-  width: 16rpx;
-  height: 16rpx;
+  width: 14rpx;
+  height: 14rpx;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -300,16 +316,122 @@ page {
   background: #52C41A;
 }
 
-.status-name {
-  flex: 1;
-  font-size: 28rpx;
+.chip-name {
+  font-size: 24rpx;
   color: #595959;
 }
 
-.status-count {
-  font-size: 28rpx;
+.chip-count {
+  font-size: 24rpx;
   font-weight: 600;
   color: #333;
+}
+
+.status-empty {
+  display: block;
+  font-size: 24rpx;
+  color: #BFBFBF;
+}
+
+.year-stats-compact {
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.year-stats-bar,
+.status-stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-stats-bar {
+  padding-top: 24rpx;
+}
+
+.year-stats-bar .section-title,
+.status-stats-bar .section-title {
+  flex-shrink: 0;
+}
+
+.year-picker-inline {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: #F5F7FA;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #595959;
+}
+
+.year-bar-meta {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #8C8C8C;
+  margin-left: auto;
+}
+
+.year-metrics {
+  display: flex;
+  align-items: stretch;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 20rpx 8rpx;
+}
+
+.year-metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  min-width: 0;
+  padding: 0 12rpx;
+}
+
+.year-metric.clickable {
+  transition: opacity 0.2s;
+}
+
+.year-metric.clickable:active {
+  opacity: 0.65;
+}
+
+.year-metric-divider {
+  width: 1rpx;
+  background: #E8E8E8;
+  flex-shrink: 0;
+}
+
+.metric-label {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #8C8C8C;
+}
+
+.metric-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric-value.primary {
+  color: #1677FF;
+}
+
+.metric-value.success {
+  color: #52C41A;
+}
+
+.metric-value.warning {
+  color: #FAAD14;
 }
 
 /* 加载状态 */
@@ -369,7 +491,7 @@ page {
 }
 
 .popup-title {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
   color: #333;
 }
@@ -422,6 +544,10 @@ page {
 .popup-item-amount {
   font-size: 28rpx;
   font-weight: 600;
+}
+
+.popup-item-amount.primary {
+  color: #1677FF;
 }
 
 .popup-item-amount.success {
