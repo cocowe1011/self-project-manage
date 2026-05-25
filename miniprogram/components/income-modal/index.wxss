@@ -1,0 +1,163 @@
+/* components/income-modal/index.wxss */
+.income-modal {
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-btn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F5F5;
+  border-radius: 50%;
+}
+
+.close-icon {
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 24rpx 32rpx;
+}
+
+.form-item {
+  margin-bottom: 28rpx;
+}
+
+.form-item:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.required {
+  color: #FF4D4F;
+  margin-right: 8rpx;
+}
+
+.amount-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  height: 88rpx;
+}
+
+.currency {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #52C41A;
+  margin-right: 12rpx;
+}
+
+.amount-input {
+  flex: 1;
+  height: 88rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  height: 88rpx;
+}
+
+.date-value {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.date-arrow {
+  flex-shrink: 0;
+}
+
+.remark-input {
+  width: 100%;
+  height: 88rpx;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 20rpx;
+}
+
+.payment-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.payment-item.active {
+  background: #333;
+  border-color: #333;
+}
+
+.payment-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.payment-item.active .payment-text {
+  color: #fff;
+}
+
+.modal-footer {
+  padding: 24rpx 32rpx 48rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #52C41A 0%, #73d13d 100%);
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+}

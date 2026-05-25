@@ -1,0 +1,96 @@
+/* pages/login/index.wxss */
+page {
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64rpx 48rpx;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 640rpx;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.login-title {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 300;
+  color: #1a1a1a;
+  margin-bottom: 16rpx;
+  letter-spacing: 8rpx;
+}
+
+.login-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  font-weight: 300;
+  letter-spacing: 2rpx;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.input-wrapper {
+  margin-bottom: 32rpx;
+  border-bottom: 2rpx solid #e5e5e5;
+  transition: border-color 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+  border-bottom-color: #1a1a1a;
+}
+
+.password-input {
+  width: 100%;
+  height: 88rpx;
+  font-size: 32rpx;
+  color: #1a1a1a;
+  background: transparent;
+}
+
+.password-input::placeholder {
+  color: #ccc;
+  font-weight: 300;
+}
+
+.login-btn {
+  width: 100%;
+  height: 96rpx;
+  background: #1a1a1a;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 400;
+  border: none;
+  letter-spacing: 4rpx;
+  margin-top: 48rpx;
+  transition: all 0.3s ease;
+}
+
+.login-btn:not([disabled]):active {
+  background: #333;
+  transform: translateY(1rpx);
+}
+
+.login-btn[disabled] {
+  background: #e5e5e5;
+  color: #ccc;
+  letter-spacing: normal;
+}

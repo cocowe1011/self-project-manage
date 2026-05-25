@@ -1,0 +1,445 @@
+/* pages/dashboard/index.wxss */
+page {
+  background: #F5F7FA;
+  min-height: 100vh;
+}
+
+.dashboard {
+  padding: 24rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 财务数据卡片 */
+.finance-card {
+  background: linear-gradient(135deg, #1a1f36 0%, #2d3555 100%);
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  color: #fff;
+  margin-bottom: 24rpx;
+}
+
+.finance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.finance-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #fff;
+}
+
+.finance-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.finance-main {
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+/* 进度条 */
+.progress-section {
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.progress-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.progress-percent {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #52C41A;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 16rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #52C41A 0%, #73d13d 100%);
+  border-radius: 8rpx;
+  transition: width 0.3s ease;
+}
+
+.finance-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-label-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.eye-icon {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.finance-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.finance-amount {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #fff;
+}
+
+.finance-amount.primary {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1rpx;
+}
+
+.finance-amount.success {
+  color: #52C41A;
+}
+
+.finance-amount.warning {
+  color: #FAAD14;
+}
+
+.finance-sub {
+  display: flex;
+  align-items: stretch;
+}
+
+.finance-sub .finance-item {
+  flex: 1;
+}
+
+.finance-divider {
+  width: 1rpx;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 32rpx;
+}
+
+/* 快捷入口 */
+.quick-actions {
+  display: flex;
+  gap: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.action-item {
+  flex: 1;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.action-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  background: linear-gradient(135deg, #1677FF 0%, #4096ff 100%);
+}
+
+.list-icon {
+  background: linear-gradient(135deg, #722ed1 0%, #9254de 100%);
+}
+
+.action-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 最近回款 */
+.recent-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-more {
+  font-size: 24rpx;
+  color: #1677FF;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+}
+
+.recent-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  flex: 1;
+}
+
+.recent-project {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.recent-date {
+  font-size: 22rpx;
+  color: #8C8C8C;
+}
+
+.recent-amount {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #52C41A;
+}
+
+/* 状态统计 */
+.status-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.status-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-gray {
+  background: #8C8C8C;
+}
+
+.dot-blue {
+  background: #1677FF;
+}
+
+.dot-purple {
+  background: #722ED1;
+}
+
+.dot-orange {
+  background: #FA8C16;
+}
+
+.dot-green {
+  background: #52C41A;
+}
+
+.status-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #595959;
+}
+
+.status-count {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 加载状态 */
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.loading-spinner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid #e8e8e8;
+  border-top-color: #1677FF;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 可点击项 */
+.finance-item.clickable {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.finance-item.clickable:active {
+  opacity: 0.7;
+}
+
+/* 弹窗样式 */
+.popup-container {
+  padding: 32rpx;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.popup-count {
+  font-size: 24rpx;
+  color: #8C8C8C;
+}
+
+.popup-list {
+  flex: 1;
+  max-height: 55vh;
+}
+
+.popup-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 16rpx;
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.popup-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.popup-item-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.popup-item-status {
+  font-size: 22rpx;
+  color: #8C8C8C;
+}
+
+.popup-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4rpx;
+}
+
+.popup-item-amount {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.popup-item-amount.success {
+  color: #52C41A;
+}
+
+.popup-item-amount.warning {
+  color: #FAAD14;
+}
+
+.popup-item-progress {
+  font-size: 22rpx;
+  color: #8C8C8C;
+}
+
+.popup-empty {
+  padding: 60rpx 0;
+  text-align: center;
+  color: #8C8C8C;
+  font-size: 28rpx;
+}

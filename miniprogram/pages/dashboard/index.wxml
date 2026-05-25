@@ -1,0 +1,194 @@
+<!--pages/dashboard/index.wxml-->
+<wxs module="fmt">
+module.exports = {
+  formatMoney: function(amount) {
+    if (amount === undefined || amount === null) return '0';
+    var str = '' + amount;
+    var parts = str.split('.');
+    var intPart = parts[0];
+    var result = '';
+    var count = 0;
+    for (var i = intPart.length - 1; i >= 0; i--) {
+      if (count > 0 && count % 3 === 0) {
+        result = ',' + result;
+      }
+      result = intPart[i] + result;
+      count++;
+    }
+    return result;
+  },
+  formatDate: function(dateStr) {
+    if (!dateStr) return '';
+    var str = '' + dateStr;
+    if (str.indexOf('T') > -1) {
+      return str.split('T')[0];
+    }
+    return str;
+  }
+};
+</wxs>
+
+<view class="dashboard">
+  <!-- 财务数据大盘卡片 -->
+  <view class="finance-card">
+    <view class="finance-header">
+      <text class="finance-title">亮&薇项目收入概览</text>
+      <text class="finance-subtitle">共 {{stats.totalProjects}} 个项目</text>
+    </view>
+    
+    <view class="finance-main">
+      <view class="finance-item main-item">
+        <view class="finance-label-row">
+          <text class="finance-label">预计总收入</text>
+          <van-icon name="{{hideAmount ? 'closed-eye' : 'eye-o'}}" size="18px" color="rgba(255,255,255,0.7)" bindtap="toggleAmountVisibility" custom-class="eye-icon" />
+        </view>
+        <text class="finance-amount primary">{{hideAmount ? '*****' : '¥' + fmt.formatMoney(stats.totalExpectedIncome)}}</text>
+      </view>
+    </view>
+    
+    <!-- 收入进度条 -->
+    <view class="progress-section">
+      <view class="progress-header">
+        <text class="progress-label">回款进度</text>
+        <text class="progress-percent">{{stats.receivedPercent}}%</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{stats.receivedPercent}}%;"></view>
+      </view>
+    </view>
+    
+    <view class="finance-sub">
+      <view class="finance-item clickable" bindtap="showReceivedProjects">
+        <text class="finance-label">已到账</text>
+        <text class="finance-amount success">{{hideAmount ? '*****' : '¥' + fmt.formatMoney(stats.totalReceivedAmount)}}</text>
+      </view>
+      <view class="finance-divider"></view>
+      <view class="finance-item clickable" bindtap="showUnreceivedProjects">
+        <text class="finance-label">未到账</text>
+        <text class="finance-amount warning">{{hideAmount ? '*****' : '¥' + fmt.formatMoney(stats.totalUnreceivedAmount)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToAddProject">
+      <view class="action-icon add-icon">
+        <van-icon name="plus" size="40rpx" color="#fff" />
+      </view>
+      <text class="action-label">新建项目</text>
+    </view>
+    <view class="action-item" bindtap="goToProjectList">
+      <view class="action-icon list-icon">
+        <van-icon name="bars" size="36rpx" color="#fff" />
+      </view>
+      <text class="action-label">项目列表</text>
+    </view>
+  </view>
+
+  <!-- 项目状态统计 -->
+  <view class="status-section">
+    <view class="section-header">
+      <text class="section-title">项目状态分布</text>
+    </view>
+    <view class="status-list">
+      <view class="status-item" wx:if="{{stats.statusCount['未开始']}}">
+        <view class="status-dot dot-gray"></view>
+        <text class="status-name">未开始</text>
+        <text class="status-count">{{stats.statusCount['未开始'] || 0}}</text>
+      </view>
+      <view class="status-item" wx:if="{{stats.statusCount['开发中']}}">
+        <view class="status-dot dot-blue"></view>
+        <text class="status-name">开发中</text>
+        <text class="status-count">{{stats.statusCount['开发中'] || 0}}</text>
+      </view>
+      <view class="status-item" wx:if="{{stats.statusCount['开发完成']}}">
+        <view class="status-dot dot-purple"></view>
+        <text class="status-name">开发完成</text>
+        <text class="status-count">{{stats.statusCount['开发完成'] || 0}}</text>
+      </view>
+      <view class="status-item" wx:if="{{stats.statusCount['现场调试中']}}">
+        <view class="status-dot dot-orange"></view>
+        <text class="status-name">现场调试中</text>
+        <text class="status-count">{{stats.statusCount['现场调试中'] || 0}}</text>
+      </view>
+      <view class="status-item" wx:if="{{stats.statusCount['已交付运维中']}}">
+        <view class="status-dot dot-green"></view>
+        <text class="status-name">已交付运维中</text>
+        <text class="status-count">{{stats.statusCount['已交付运维中'] || 0}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近回款记录 -->
+  <view class="recent-section" wx:if="{{stats.recentIncomes.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">最近回款</text>
+      <text class="section-more" bindtap="goToProjectList">查看全部</text>
+    </view>
+    <view class="recent-list">
+      <view 
+        class="recent-item" 
+        wx:for="{{stats.recentIncomes}}" 
+        wx:key="_id"
+        data-id="{{item.projectId}}"
+        bindtap="goToProjectDetail"
+      >
+        <view class="recent-left">
+          <text class="recent-project">{{item.projectName}}</text>
+          <text class="recent-date">{{fmt.formatDate(item.receivedAt)}}</text>
+        </view>
+        <text class="recent-amount">+¥{{fmt.formatMoney(item.amount)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+  </view>
+
+  <!-- 项目弹窗 -->
+  <van-popup 
+    show="{{showProjectPopup}}" 
+    position="bottom" 
+    round 
+    bind:close="closeProjectPopup"
+    custom-style="max-height: 70vh;"
+  >
+    <view class="popup-container">
+      <view class="popup-header">
+        <text class="popup-title">{{popupTitle}}</text>
+        <text class="popup-count">{{popupProjects.length}} 个项目</text>
+      </view>
+      <scroll-view scroll-y class="popup-list">
+        <view 
+          class="popup-item" 
+          wx:for="{{popupProjects}}" 
+          wx:key="_id"
+          data-id="{{item._id}}"
+          bindtap="goToProjectDetail"
+        >
+          <view class="popup-item-left">
+            <text class="popup-item-name">{{item.name}}</text>
+            <text class="popup-item-status">{{item.status}}</text>
+          </view>
+          <view class="popup-item-right">
+            <text class="popup-item-amount {{popupType === 'received' ? 'success' : 'warning'}}">
+              {{popupType === 'received' ? '已到账 ¥' : '未到账 ¥'}}{{fmt.formatMoney(popupType === 'received' ? item.receivedAmount : item.unreceivedAmount)}}
+            </text>
+            <text class="popup-item-progress" wx:if="{{popupType === 'received' && item.unreceivedAmount > 0}}">
+              剩余 ¥{{fmt.formatMoney(item.unreceivedAmount)}}
+            </text>
+            <text class="popup-item-progress" wx:if="{{popupType === 'unreceived' && item.receivedAmount > 0}}">
+              已收 ¥{{fmt.formatMoney(item.receivedAmount)}}
+            </text>
+          </view>
+        </view>
+        <view class="popup-empty" wx:if="{{popupProjects.length === 0}}">
+          <text>暂无{{popupType === 'received' ? '已到账' : '未到账'}}项目</text>
+        </view>
+      </scroll-view>
+    </view>
+  </van-popup>
+</view>

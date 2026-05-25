@@ -1,0 +1,21 @@
+# 依赖
+node_modules/
+miniprogram/node_modules/
+cloudfunctions/*/node_modules/
+
+# 微信开发者工具私有配置
+project.private.config.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 日志
+*.log
+npm-debug.log*

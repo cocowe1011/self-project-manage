@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "项目详情",
+  "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "timeline": "/components/timeline/index",
+    "income-modal": "/components/income-modal/index",
+    "edit-project-modal": "/components/edit-project-modal/index"
+  }
+}

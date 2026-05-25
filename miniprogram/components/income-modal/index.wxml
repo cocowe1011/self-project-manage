@@ -1,0 +1,129 @@
+<!--components/income-modal/index.wxml-->
+<wxs module="utils">
+module.exports = {
+  formatDate: function(timestamp) {
+    var d = getDate(timestamp);
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+    
+    var monthStr = month < 10 ? '0' + month : '' + month;
+    var dayStr = day < 10 ? '0' + day : '' + day;
+    
+    return year + '-' + monthStr + '-' + dayStr;
+  }
+};
+</wxs>
+
+<van-popup 
+  show="{{show}}" 
+  position="bottom" 
+  round
+  bind:close="onClose"
+  custom-style="padding: 0;"
+>
+  <view class="income-modal">
+    <view class="modal-header">
+      <text class="modal-title">记一笔回款</text>
+      <view class="close-btn" bindtap="onClose">
+        <van-icon name="cross" size="36rpx" color="#8C8C8C" custom-class="close-icon" />
+      </view>
+    </view>
+
+    <view class="modal-body">
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>到账金额</text>
+        </view>
+        <view class="amount-input-wrapper">
+          <text class="currency">¥</text>
+          <input 
+            class="amount-input" 
+            type="digit"
+            placeholder="0.00"
+            value="{{amount}}"
+            bindinput="onAmountInput"
+          />
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>到账日期</text>
+        </view>
+        <view class="date-picker" bindtap="onShowDatePicker">
+          <text class="date-value">{{utils.formatDate(receivedAt)}}</text>
+          <van-icon name="arrow-down" size="20rpx" color="#8C8C8C" custom-class="date-arrow" />
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>支付方式</text>
+        </view>
+        <view class="payment-methods">
+          <view 
+            class="payment-item {{paymentMethod === 'wechat' ? 'active' : ''}}" 
+            bindtap="onSelectPayment"
+            data-method="wechat"
+          >
+            <van-icon name="wechat-pay" size="36rpx" color="{{paymentMethod === 'wechat' ? '#fff' : '#07C160'}}" />
+            <text class="payment-text">微信</text>
+          </view>
+          <view 
+            class="payment-item {{paymentMethod === 'alipay' ? 'active' : ''}}" 
+            bindtap="onSelectPayment"
+            data-method="alipay"
+          >
+            <van-icon name="alipay" size="36rpx" color="{{paymentMethod === 'alipay' ? '#fff' : '#1677FF'}}" />
+            <text class="payment-text">支付宝</text>
+          </view>
+          <view 
+            class="payment-item {{paymentMethod === 'bank' ? 'active' : ''}}" 
+            bindtap="onSelectPayment"
+            data-method="bank"
+          >
+            <van-icon name="card" size="36rpx" color="{{paymentMethod === 'bank' ? '#fff' : '#FA8C16'}}" />
+            <text class="payment-text">银行卡</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>备注</text>
+        </view>
+        <input 
+          class="remark-input" 
+          placeholder="选填，如：首付款、尾款等"
+          value="{{remark}}"
+          bindinput="onRemarkInput"
+        />
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="submit-btn" bindtap="onSubmit">确认添加</button>
+    </view>
+  </view>
+</van-popup>
+
+<!-- 日期选择器 -->
+<van-popup 
+  show="{{showDatePicker}}" 
+  position="bottom" 
+  round
+  bind:close="onCloseDatePicker"
+>
+  <van-datetime-picker
+    type="date"
+    value="{{receivedAt}}"
+    min-date="{{minDate}}"
+    max-date="{{maxDate}}"
+    bind:confirm="onConfirmDate"
+    bind:cancel="onCloseDatePicker"
+  />
+</van-popup>

@@ -1,0 +1,210 @@
+<!--pages/project-detail/index.wxml-->
+<wxs module="fmt">
+module.exports = {
+  formatMoney: function(amount) {
+    if (amount === undefined || amount === null) return '0';
+    var str = '' + amount;
+    var parts = str.split('.');
+    var intPart = parts[0];
+    var result = '';
+    var count = 0;
+    for (var i = intPart.length - 1; i >= 0; i--) {
+      if (count > 0 && count % 3 === 0) {
+        result = ',' + result;
+      }
+      result = intPart[i] + result;
+      count++;
+    }
+    return result;
+  },
+  formatDateTime: function(dateStr) {
+    if (!dateStr) return '';
+    // 处理 ISO 格式或时间戳，只返回年月日
+    var str = '' + dateStr;
+    // 如果是 ISO 格式 (2024-01-01T12:00:00.000Z)
+    if (str.indexOf('T') > -1) {
+      return str.split('T')[0];
+    }
+    // 如果包含空格，只取日期部分
+    if (str.indexOf(' ') > -1) {
+      return str.split(' ')[0];
+    }
+    return str;
+  }
+};
+</wxs>
+
+<view class="detail-page">
+  <!-- 项目信息卡片 -->
+  <view class="info-card" wx:if="{{project}}">
+    <view class="info-header">
+      <text class="project-name">{{project.name}}</text>
+      <view class="header-actions">
+        <view class="edit-btn" bindtap="showEditModal">
+          <van-icon name="edit" size="32rpx" color="#1677FF" custom-class="edit-icon" />
+        </view>
+        <view class="status-tag status-{{project.statusClass}}" bindtap="showStatusActionSheet">
+          {{project.status}}
+          <van-icon name="arrow-down" size="18rpx" custom-class="status-arrow" />
+        </view>
+      </view>
+    </view>
+    
+    <view class="info-body">
+      <view class="info-item">
+        <text class="info-label">客户名称</text>
+        <text class="info-value">{{project.client}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.description}}">
+        <text class="info-label">项目描述</text>
+        <text class="info-value desc">{{project.description}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">创建时间</text>
+        <text class="info-value">{{fmt.formatDateTime(project.createdAt)}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.startDate}}">
+        <text class="info-label">项目开始时间</text>
+        <text class="info-value">{{project.startDate}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.firstPaymentDate}}">
+        <text class="info-label">首付款日期</text>
+        <text class="info-value">{{project.firstPaymentDate}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.devStartDate}}">
+        <text class="info-label">开发开始时间</text>
+        <text class="info-value">{{project.devStartDate}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.devEndDate}}">
+        <text class="info-label">开发完成时间</text>
+        <text class="info-value">{{project.devEndDate}}</text>
+      </view>
+      <view class="info-item" wx:if="{{project.finalPaymentDate}}">
+        <text class="info-label">尾款付款日期</text>
+        <text class="info-value">{{project.finalPaymentDate}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 财务概览 -->
+  <view class="finance-card" wx:if="{{project}}">
+    <view class="finance-header">
+      <text class="finance-title">财务概览</text>
+    </view>
+    
+    <view class="finance-main">
+      <view class="finance-big-item">
+        <text class="finance-label">预计收入</text>
+        <text class="finance-amount primary">¥{{fmt.formatMoney(project.expectedIncome)}}</text>
+      </view>
+    </view>
+    
+    <view class="finance-row">
+      <view class="finance-item">
+        <text class="finance-label">已到账</text>
+        <text class="finance-amount success">¥{{fmt.formatMoney(project.receivedAmount)}}</text>
+      </view>
+      <view class="finance-item">
+        <text class="finance-label">未到账</text>
+        <text class="finance-amount warning">¥{{fmt.formatMoney(project.unreceivedAmount)}}</text>
+      </view>
+    </view>
+
+    <view class="add-income-btn" bindtap="showIncomeModal">
+      <van-icon name="plus" size="32rpx" color="#fff" custom-class="btn-icon" />
+      <text class="btn-text">记一笔回款</text>
+    </view>
+  </view>
+
+  <!-- 收款记录 -->
+  <view class="income-section" wx:if="{{project.incomeRecords.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">收款记录</text>
+      <text class="section-count">{{project.incomeRecords.length}}笔</text>
+    </view>
+    <view class="income-list">
+      <view class="income-item" wx:for="{{project.incomeRecords}}" wx:key="_id">
+        <view class="income-left">
+          <text class="income-amount">¥{{fmt.formatMoney(item.amount)}}</text>
+          <view class="income-meta">
+            <text class="income-date">{{fmt.formatDateTime(item.receivedAt)}}</text>
+            <view class="payment-tag {{item.paymentMethod}}" wx:if="{{item.paymentMethod}}">
+              <van-icon name="{{item.paymentMethod === 'wechat' ? 'wechat-pay' : item.paymentMethod === 'alipay' ? 'alipay' : 'card'}}" size="20rpx" />
+              <text>{{item.paymentMethod === 'wechat' ? '微信' : item.paymentMethod === 'alipay' ? '支付宝' : '银行卡'}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="income-right">
+          <text class="income-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+          <view class="delete-btn" catchtap="onDeleteIncome" data-id="{{item._id}}" data-amount="{{item.amount}}">
+            <van-icon name="cross" size="28rpx" color="#FF4D4F" custom-class="delete-icon" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 项目动态 -->
+  <view class="timeline-section">
+    <view class="section-header">
+      <text class="section-title">项目动态</text>
+    </view>
+    <timeline logs="{{logs}}" />
+  </view>
+
+  <!-- 作废 / 重新启用 -->
+  <view class="cancel-section" wx:if="{{project}}">
+    <view class="cancel-btn" wx:if="{{project.status !== '已作废'}}" bindtap="onCancelProject">
+      <text class="cancel-btn-text">作废项目</text>
+    </view>
+    <view class="reopen-btn" wx:else bindtap="onReopenProject">
+      <text class="reopen-btn-text">重新启用项目</text>
+    </view>
+  </view>
+
+  <!-- 状态选择面板 -->
+  <van-popup 
+    show="{{showStatusSheet}}" 
+    position="bottom"
+    round
+    bind:close="onCloseStatusSheet"
+  >
+    <view class="status-sheet">
+      <view class="sheet-title">选择状态</view>
+      <view class="sheet-header">
+        <text class="sheet-label">当前状态：{{project.status}}</text>
+      </view>
+      <view 
+        class="sheet-item {{project.status === item.name ? 'active' : ''}}" 
+        wx:for="{{statusListWithClass}}" 
+        wx:key="name"
+        bindtap="onSelectStatus"
+        data-status="{{item.name}}"
+      >
+        <view class="status-dot dot-{{item.class}}"></view>
+        <text class="sheet-item-text">{{item.name}}</text>
+        <van-icon wx:if="{{project.status === item.name}}" name="success" size="32rpx" color="#52C41A" custom-class="check-mark" />
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 收入录入弹窗 -->
+  <income-modal 
+    show="{{showIncomeModal}}"
+    bind:close="onCloseIncomeModal"
+    bind:submit="onSubmitIncome"
+  />
+
+  <!-- 编辑项目弹窗 -->
+  <edit-project-modal 
+    show="{{showEditModal}}"
+    project="{{project}}"
+    bind:close="onCloseEditModal"
+    bind:submit="onSubmitEdit"
+  />
+
+  <!-- 加载状态 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+  </view>
+</view>

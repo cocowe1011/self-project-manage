@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "项目管理平台",
+  "usingComponents": {
+    "van-popup": "@vant/weapp/popup/index",
+    "van-icon": "@vant/weapp/icon/index"
+  }
+}

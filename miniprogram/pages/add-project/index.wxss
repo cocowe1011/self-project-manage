@@ -1,0 +1,119 @@
+/* pages/add-project/index.wxss */
+page {
+  background: #F5F7FA;
+  min-height: 100vh;
+}
+
+.add-project-page {
+  padding: 24rpx;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx 28rpx 28rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.form-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.required {
+  color: #FF4D4F;
+  margin-right: 8rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 72rpx;
+  background: #FAFAFA;
+  border-radius: 8rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.income-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #FAFAFA;
+  border-radius: 8rpx;
+  padding: 0 24rpx;
+}
+
+.currency {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-right: 8rpx;
+}
+
+.income-input {
+  background: transparent;
+  padding-left: 0;
+  flex: 1;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 160rpx;
+  background: #FAFAFA;
+  border-radius: 8rpx;
+  padding: 16rpx 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-tips {
+  margin: 24rpx 0;
+  padding: 0 8rpx;
+}
+
+.form-tips text {
+  font-size: 24rpx;
+  color: #8C8C8C;
+  line-height: 1.6;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #1677FF 0%, #4096ff 100%);
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  margin-top: 40rpx;
+}
+
+.submit-btn.disabled {
+  opacity: 0.6;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+}
+
+.date-picker.placeholder {
+  color: #999;
+}

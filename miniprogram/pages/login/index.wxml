@@ -1,0 +1,27 @@
+<!--pages/login/index.wxml-->
+<view class="login-page">
+  <view class="login-card">
+    <view class="login-header">
+      <text class="login-title">亮❤️薇项目管理平台</text>
+      <text class="login-subtitle">请输入密码登录</text>
+    </view>
+    
+    <view class="login-form">
+      <view class="input-wrapper">
+        <input 
+          class="password-input" 
+          type="number"
+          placeholder="请输入密码"
+          password="{{true}}"
+          value="{{password}}"
+          bindinput="onPasswordInput"
+          maxlength="11"
+        />
+      </view>
+      
+      <button class="login-btn" bindtap="onLogin" disabled="{{!password}}">
+        登录
+      </button>
+    </view>
+  </view>
+</view>

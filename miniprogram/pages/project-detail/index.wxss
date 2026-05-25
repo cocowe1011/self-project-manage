@@ -1,0 +1,481 @@
+/* pages/project-detail/index.wxss */
+page {
+  background: #F5F7FA;
+  min-height: 100vh;
+}
+
+.detail-page {
+  padding: 24rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 项目信息卡片 */
+.info-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.project-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+  flex: 1;
+  margin-right: 16rpx;
+  line-height: 1.3;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-shrink: 0;
+}
+
+.edit-btn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F5F5;
+  border-radius: 50%;
+}
+
+.edit-icon {
+  line-height: 1;
+}
+
+.status-tag {
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.status-arrow {
+  line-height: 1;
+}
+
+.status-not-started {
+  background: #F5F5F5;
+  color: #8C8C8C;
+}
+
+.status-in-development {
+  background: #E6F4FF;
+  color: #1677FF;
+}
+
+.status-development-complete {
+  background: #F9F0FF;
+  color: #722ED1;
+}
+
+.status-on-site-debugging {
+  background: #FFF7E6;
+  color: #FA8C16;
+}
+
+.status-delivered {
+  background: #F6FFED;
+  color: #52C41A;
+}
+
+.status-cancelled {
+  background: #FFF1F0;
+  color: #FF4D4F;
+}
+
+.info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #8C8C8C;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #333;
+  text-align: right;
+  max-width: 400rpx;
+}
+
+.info-value.desc {
+  text-align: left;
+  margin-top: 8rpx;
+  color: #595959;
+}
+
+/* 财务概览 */
+.finance-card {
+  background: linear-gradient(135deg, #1a1f36 0%, #2d3555 100%);
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  color: #fff;
+}
+
+.finance-header {
+  margin-bottom: 24rpx;
+}
+
+.finance-title {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.finance-main {
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 24rpx;
+}
+
+.finance-big-item {
+  text-align: center;
+}
+
+.finance-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.finance-amount {
+  font-weight: 600;
+}
+
+.finance-amount.primary {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.finance-amount.success {
+  color: #52C41A;
+}
+
+.finance-amount.warning {
+  color: #FAAD14;
+}
+
+.finance-row {
+  display: flex;
+  gap: 24rpx;
+}
+
+.finance-row .finance-item {
+  flex: 1;
+  text-align: center;
+}
+
+.finance-row .finance-amount {
+  font-size: 32rpx;
+  display: block;
+  margin-top: 8rpx;
+}
+
+.add-income-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  margin-top: 28rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12rpx;
+}
+
+.btn-icon {
+  line-height: 1;
+}
+
+.btn-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* 收款记录 */
+.income-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-count {
+  font-size: 24rpx;
+  color: #8C8C8C;
+}
+
+.income-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.income-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  background: #FAFAFA;
+  border-radius: 8rpx;
+}
+
+.income-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  flex: 1;
+}
+
+.income-right {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.income-amount {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #52C41A;
+}
+
+.income-meta {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.income-date {
+  font-size: 22rpx;
+  color: #8C8C8C;
+}
+
+.payment-tag {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 6rpx;
+  font-size: 20rpx;
+}
+
+.payment-tag.wechat {
+  background: #E6F7ED;
+  color: #07C160;
+}
+
+.payment-tag.alipay {
+  background: #E6F4FF;
+  color: #1677FF;
+}
+
+.payment-tag.bank {
+  background: #FFF7E6;
+  color: #FA8C16;
+}
+
+.income-remark {
+  font-size: 24rpx;
+  color: #595959;
+  max-width: 200rpx;
+  text-align: right;
+}
+
+.delete-btn {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF1F0;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.delete-icon {
+  line-height: 1;
+}
+
+/* 时间轴 */
+.timeline-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.07);
+}
+
+/* 作废 / 重新启用 */
+.cancel-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 40rpx;
+  padding-bottom: 20rpx;
+}
+
+.cancel-btn {
+  padding: 16rpx 48rpx;
+  border: 2rpx solid #D9D9D9;
+  border-radius: 12rpx;
+}
+
+.cancel-btn-text {
+  font-size: 26rpx;
+  color: #BFBFBF;
+}
+
+.reopen-btn {
+  padding: 16rpx 48rpx;
+  border: 2rpx solid #1677FF;
+  border-radius: 12rpx;
+}
+
+.reopen-btn-text {
+  font-size: 26rpx;
+  color: #1677FF;
+}
+
+/* 状态选择面板 */
+.status-sheet {
+  padding: 24rpx;
+  padding-bottom: 60rpx;
+}
+
+.sheet-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  padding-bottom: 20rpx;
+}
+
+.sheet-header {
+  padding: 16rpx 0;
+  margin-bottom: 16rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.sheet-label {
+  font-size: 26rpx;
+  color: #8C8C8C;
+}
+
+.sheet-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 16rpx;
+  border-radius: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.sheet-item.active {
+  background: #F6FFED;
+}
+
+.sheet-item .status-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.dot-not-started {
+  background: #8C8C8C;
+}
+
+.dot-in-development {
+  background: #1677FF;
+}
+
+.dot-development-complete {
+  background: #722ED1;
+}
+
+.dot-on-site-debugging {
+  background: #FA8C16;
+}
+
+.dot-delivered {
+  background: #52C41A;
+}
+
+.sheet-item-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.check-mark {
+  margin-left: auto;
+  line-height: 1;
+}
+
+/* 加载状态 */
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.loading-spinner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid #e8e8e8;
+  border-top-color: #1677FF;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

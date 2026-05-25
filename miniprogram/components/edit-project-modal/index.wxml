@@ -1,0 +1,139 @@
+<!--components/edit-project-modal/index.wxml-->
+<van-popup 
+  show="{{show}}" 
+  position="bottom" 
+  round
+  bind:close="onClose"
+  custom-style="padding: 0;"
+>
+  <view class="edit-modal">
+    <view class="modal-header">
+      <text class="modal-title">编辑项目</text>
+      <view class="close-btn" bindtap="onClose">
+        <van-icon name="cross" size="36rpx" color="#8C8C8C" custom-class="close-icon" />
+      </view>
+    </view>
+
+    <view class="modal-body">
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>项目名称</text>
+        </view>
+        <input 
+          class="form-input" 
+          placeholder="请输入项目名称"
+          value="{{form.name}}"
+          data-field="name"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>客户名称</text>
+        </view>
+        <input 
+          class="form-input" 
+          placeholder="请输入客户名称"
+          value="{{form.client}}"
+          data-field="client"
+          bindinput="onInputChange"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text class="required">*</text>
+          <text>预计收入</text>
+        </view>
+        <view class="income-input-wrapper">
+          <text class="currency">¥</text>
+          <input 
+            class="form-input income-input" 
+            type="digit"
+            placeholder="0.00"
+            value="{{form.expectedIncome}}"
+            data-field="expectedIncome"
+            bindinput="onInputChange"
+          />
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>项目描述</text>
+        </view>
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入项目描述（选填）"
+          value="{{form.description}}"
+          data-field="description"
+          bindinput="onInputChange"
+          maxlength="200"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>项目开始时间</text>
+        </view>
+        <picker mode="date" value="{{form.startDate}}" bindchange="onDateChange" data-field="startDate">
+          <view class="form-input date-picker {{form.startDate ? '' : 'placeholder'}}">
+            {{form.startDate || '请选择项目开始时间'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>首付款日期</text>
+        </view>
+        <picker mode="date" value="{{form.firstPaymentDate}}" bindchange="onDateChange" data-field="firstPaymentDate">
+          <view class="form-input date-picker {{form.firstPaymentDate ? '' : 'placeholder'}}">
+            {{form.firstPaymentDate || '请选择首付款日期'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>开发开始时间</text>
+        </view>
+        <picker mode="date" value="{{form.devStartDate}}" bindchange="onDateChange" data-field="devStartDate">
+          <view class="form-input date-picker {{form.devStartDate ? '' : 'placeholder'}}">
+            {{form.devStartDate || '请选择开发开始时间'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>开发完成时间</text>
+        </view>
+        <picker mode="date" value="{{form.devEndDate}}" bindchange="onDateChange" data-field="devEndDate">
+          <view class="form-input date-picker {{form.devEndDate ? '' : 'placeholder'}}">
+            {{form.devEndDate || '请选择开发完成时间'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">
+          <text>尾款付款日期</text>
+        </view>
+        <picker mode="date" value="{{form.finalPaymentDate}}" bindchange="onDateChange" data-field="finalPaymentDate">
+          <view class="form-input date-picker {{form.finalPaymentDate ? '' : 'placeholder'}}">
+            {{form.finalPaymentDate || '请选择尾款付款日期'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="cancel-btn" bindtap="onClose">取消</button>
+      <button class="submit-btn" bindtap="onSubmit">保存修改</button>
+    </view>
+  </view>
+</van-popup>

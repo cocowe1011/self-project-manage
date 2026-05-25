@@ -1,0 +1,57 @@
+/**app.wxss**/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+page {
+  background: #F5F7FA;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 全局颜色变量 */
+page {
+  --primary-color: #1677FF;
+  --success-color: #52C41A;
+  --warning-color: #FAAD14;
+  --error-color: #FF4D4F;
+  --text-primary: #333333;
+  --text-secondary: #595959;
+  --text-tertiary: #8C8C8C;
+  --border-color: #F0F0F0;
+  --background-color: #F5F7FA;
+}
+
+/* 金额高亮样式 */
+.amount-primary {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.amount-success {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--success-color);
+}
+
+.amount-warning {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--warning-color);
+}

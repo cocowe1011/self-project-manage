@@ -1,0 +1,43 @@
+<!--components/timeline/index.wxml-->
+<wxs module="fmt">
+module.exports = {
+  formatDateTime: function(dateStr) {
+    if (!dateStr) return '';
+    var str = '' + dateStr;
+    if (str.indexOf('T') > -1) {
+      var parts = str.split('T');
+      var datePart = parts[0];
+      var timePart = parts[1];
+      if (timePart.indexOf('.') > -1) {
+        timePart = timePart.split('.')[0];
+      }
+      return datePart + ' ' + timePart;
+    }
+    return str;
+  }
+};
+</wxs>
+
+<view class="timeline">
+  <view class="timeline-empty" wx:if="{{logs.length === 0}}">
+    <text class="empty-text">暂无动态记录</text>
+  </view>
+
+  <view class="timeline-list" wx:else>
+    <view class="timeline-item" wx:for="{{logs}}" wx:key="_id">
+      <view class="timeline-left">
+        <view class="timeline-dot {{item.type === '项目建立' ? 'dot-create' : item.type === '收到入款' ? 'dot-income' : item.type === '收入记录删除' ? 'dot-delete' : 'dot-status'}}"></view>
+        <view class="timeline-line" wx:if="{{index < logs.length - 1}}"></view>
+      </view>
+      <view class="timeline-content">
+        <view class="timeline-header">
+          <text class="timeline-type">{{item.type}}</text>
+          <text class="timeline-time">{{fmt.formatDateTime(item.createdAt)}}</text>
+        </view>
+        <view class="timeline-body">
+          <text class="timeline-text">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,104 @@
+/* components/timeline/index.wxss */
+.timeline {
+  min-height: 100rpx;
+}
+
+.timeline-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #8C8C8C;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  padding-bottom: 32rpx;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.timeline-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-create {
+  background: #1677FF;
+}
+
+.dot-income {
+  background: #52C41A;
+}
+
+.dot-status {
+  background: #722ED1;
+}
+
+.dot-delete {
+  background: #FF4D4F;
+}
+
+.timeline-line {
+  width: 2rpx;
+  flex: 1;
+  background: #E8E8E8;
+  margin-top: 8rpx;
+  min-height: 40rpx;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 8rpx;
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 8rpx;
+}
+
+.timeline-type {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.timeline-time {
+  font-size: 22rpx;
+  color: #8C8C8C;
+}
+
+.timeline-body {
+  background: #FAFAFA;
+  border-radius: 8rpx;
+  padding: 16rpx 20rpx;
+}
+
+.timeline-text {
+  font-size: 26rpx;
+  color: #595959;
+  line-height: 1.5;
+}

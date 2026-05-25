@@ -1,0 +1,104 @@
+<!--pages/projects/index.wxml-->
+<wxs module="fmt">
+module.exports = {
+  formatMoney: function(amount) {
+    if (amount === undefined || amount === null) return '0';
+    var str = '' + amount;
+    var parts = str.split('.');
+    var intPart = parts[0];
+    var result = '';
+    var count = 0;
+    for (var i = intPart.length - 1; i >= 0; i--) {
+      if (count > 0 && count % 3 === 0) {
+        result = ',' + result;
+      }
+      result = intPart[i] + result;
+      count++;
+    }
+    return result;
+  }
+};
+</wxs>
+
+<view class="projects-page">
+  <!-- 搜索和筛选 -->
+  <view class="filter-section">
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        placeholder="搜索项目名称/客户" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+      />
+    </view>
+    <picker 
+      class="status-picker" 
+      value="{{selectedStatus}}" 
+      range="{{statusList}}"
+      bindchange="onStatusChange"
+    >
+      <view class="picker-content">
+        <text>{{statusList[selectedStatus] || '全部状态'}}</text>
+        <van-icon name="arrow-down" size="20rpx" color="#999" custom-class="picker-arrow" />
+      </view>
+    </picker>
+  </view>
+
+  <!-- 项目列表 -->
+  <view class="project-list" wx:if="{{!loading && filteredProjects.length > 0}}">
+    <view 
+      class="project-card" 
+      wx:for="{{filteredProjects}}" 
+      wx:key="_id"
+      data-id="{{item._id}}"
+      bindtap="goToDetail"
+    >
+      <view class="card-header">
+        <view class="project-name">{{item.name}}</view>
+        <view class="status-tag status-{{item.statusClass}}">{{item.status}}</view>
+      </view>
+      <view class="card-body">
+        <view class="info-row">
+          <text class="info-label">客户</text>
+          <text class="info-value">{{item.client}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">预计收入</text>
+          <text class="info-value amount">¥{{fmt.formatMoney(item.expectedIncome)}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.startDate}}">
+          <text class="info-label">项目开始</text>
+          <text class="info-value">{{item.startDate}}</text>
+        </view>
+      </view>
+      <view class="card-footer">
+        <view class="finance-item">
+          <text class="finance-label">已到账</text>
+          <text class="finance-value success">¥{{fmt.formatMoney(item.receivedAmount)}}</text>
+        </view>
+        <view class="finance-divider"></view>
+        <view class="finance-item">
+          <text class="finance-label">未到账</text>
+          <text class="finance-value warning">¥{{fmt.formatMoney(item.unreceivedAmount)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && filteredProjects.length === 0}}">
+    <van-icon name="notes-o" size="80rpx" color="#D9D9D9" custom-class="empty-icon" />
+    <text class="empty-text">暂无项目</text>
+    <view class="empty-action" bindtap="goToAddProject">创建第一个项目</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+  </view>
+
+  <!-- 新建按钮 -->
+  <view class="fab-button" bindtap="goToAddProject">
+    <van-icon name="plus" size="48rpx" color="#fff" custom-class="fab-icon" />
+  </view>
+</view>
